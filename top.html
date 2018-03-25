@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>load_method</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <style>
+        *{margin: 0;padding: 0}
+        html, body{height: 100%}
+		#header{float: left;width:100%;height:15%;background-color: black}
+        #nav{float: left;width:5%;height:85%;background-color: antiquewhite}
+        #con{float: right;width: 95%;height:85%;background-color: aqua}
+
+		<!--   以下選單CSS參考網址  https://catalin.red/css3-animated-dropdown-menu/ -->	
+	#menu, #menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+	#menu {
+    width: 70%;
+    margin: 10px auto;
+    border: 1px solid #222;
+    background-color: #111;
+    background-image: linear-gradient(#444, #111);
+    border-radius: 6px;
+    box-shadow: 0 1px 1px #777;
+	float:left;
+}
+#menu:before,
+#menu:after {
+    content: "";
+    display: table;
+}
+
+#menu:after {
+    clear: both;
+}
+
+#menu {
+    zoom:1;
+}
+	
+	#menu li {
+    float: left;
+    border-right: 1px solid #222;
+    box-shadow: 1px 0 0 #444;
+    position: relative;
+}
+
+#menu a {
+    float: left;
+    padding: 12px 30px;
+    color: #999;
+    text-transform: uppercase;
+    font: bold 12px Arial, Helvetica;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #000;
+}
+
+#menu li:hover > a {
+    color: #fafafa;
+}
+
+*html #menu li a:hover { /* IE6 only */
+    color: #fafafa;
+}
+
+	
+		#menu ul {
+    margin: 20px 0 0 0;
+    _margin: 0; /*IE6 only*/
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 38px;
+    left: 0;
+    z-index: 1;    
+    background: #444;   
+    background: linear-gradient(#444, #111);
+    box-shadow: 0 -1px 0 rgba(255,255,255,.3);  
+    border-radius: 3px;
+    transition: all .2s ease-in-out;
+}
+
+#menu li:hover > ul {
+    opacity: 1;
+    visibility: visible;
+    margin: 0;
+}
+
+#menu ul ul {
+    top: 0;
+    left: 150px;
+    margin: 0 0 0 20px;
+    _margin: 0; /*IE6 only*/
+    box-shadow: -1px 0 0 rgba(255,255,255,.3);      
+}
+
+#menu ul li {
+    float: none;
+    display: block;
+    border: 0;
+    _line-height: 0; /*IE6 only*/
+    box-shadow: 0 1px 0 #111, 0 2px 0 #666;
+}
+
+#menu ul li:last-child {   
+    box-shadow: none;    
+}
+
+#menu ul a {    
+    padding: 10px;
+    width: 130px;
+    _height: 10px; /*IE6 only*/
+    display: block;
+    white-space: nowrap;
+    float: none;
+    text-transform: none;
+}
+
+#menu ul a:hover {
+    background-color: #0186ba;
+    background-image: linear-gradient(#04acec, #0186ba);
+}
+
+#menu-trigger { /* Hide it initially */
+    display: none;
+}
+<!-- the CSS3 media queries do the trick. We’ll add CSS rules to override the initial styles:
+     簡單說就是給手機用-->
+@media screen and (max-width: 600px) {
+
+    #menu-wrap {
+        position: relative;
+    }
+
+    #menu-wrap * {
+        box-sizing: border-box;
+    }
+
+    #menu-trigger {
+        display: block; /* Show it now */
+        height: 40px;
+        line-height: 40px;
+        cursor: pointer;        
+        padding: 0 0 0 35px;
+        border: 1px solid #222;
+        color: #fafafa;
+        font-weight: bold;
+        background-color: #111;
+        /* Multiple backgrounds here, the first is base64 encoded */
+        background: url(data:image/png;base64,iVBOR...) no-repeat 10px center, linear-gradient(#444, #111);
+        border-radius: 6px;
+        box-shadow: 0 1px 1px #777, 0 1px 0 #666 inset;
+    }
+
+    #menu {
+        margin: 0; padding: 10px;
+        position: absolute;
+        top: 40px;
+        width: 100%;
+        z-index: 1;
+        display: none;
+        box-shadow: none;       
+    }
+
+    #menu:after {
+        content: '';
+        position: absolute;
+        left: 25px;
+        top: -8px;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid #444;
+    }   
+
+    #menu ul {
+        position: static;
+        visibility: visible;
+        opacity: 1;
+        margin: 0;
+        background: none;
+        box-shadow: none;               
+    }
+
+    #menu ul ul {
+        margin: 0 0 0 20px !important;
+        box-shadow: none;       
+    }
+
+    #menu li {
+        position: static;
+        display: block;
+        float: none;
+        border: 0;
+        margin: 5px;
+        box-shadow: none;           
+    }
+
+    #menu ul li{
+        margin-left: 20px;
+        box-shadow: none;       
+    }
+
+    #menu a{
+        display: block;
+        float: none;
+        padding: 0;
+        color: #999;
+    }
+
+    #menu a:hover{
+        color: #fafafa;
+    }   
+
+    #menu ul a{
+        padding: 0;
+        width: auto;        
+    }
+
+    #menu ul a:hover{
+        background: none;   
+    }
+
+    #menu ul li:first-child a:after,
+    #menu ul ul li:first-child a:after {
+        border: 0;
+    }       
+
+}
+
+@media screen and (min-width: 600px) {
+    #menu {
+        display: block !important;
+    }
+}   
+
+/* iPad */
+.no-transition {
+    transition: none;
+    opacity: 1;
+    visibility: visible;
+    display: none;          
+}
+
+#menu li:hover > .no-transition {
+    display: block;
+}
+
+    </style>
+    <script>
+        $(document).ready(function(){
+            //页面加载的时候，内容框默认显示 a.html
+            $('#con').load('./a.html');
+            //单击 a 链接，加载 a.html
+            $("menu_a1").click(function(){
+                $('#con').load('adminindex.php');
+            });
+            $("menu_a2").click(function(){
+                $('#con').load('in.php');
+            });
+            $("menu_a3").click(function(){
+                $('#con').load('check.php');
+            });
+            $("menu_b1").click(function(){
+                $('#con').load('business.php');
+            });
+            $("menu_b2").click(function(){
+                $('#con').load('bin.php');
+            });
+            $("menu_b3").click(function(){
+                $('#con').load('butemp.php');
+            });
+            $("menu_c11").click(function(){
+                $('#con').load('adminstate.php');
+            });
+            $("menu_c12").click(function(){
+                $('#con').load('min.php');
+            });
+            $("menu_c21").click(function(){
+                $('#con').load('admineng.php');
+            });
+            $("menu_c22").click(function(){
+                $('#con').load('newen.php');
+            });
+            $("menu_d11").click(function(){
+                $('#con').load('goodc.php');
+            });
+            $("menu_d12").click(function(){
+                $('#con').load('goodin.php');
+            });
+            $("menu_d13").click(function(){
+                $('#con').load('goodt.php');
+            });
+            $("menu_d21").click(function(){
+                $('#con').load('mala.php');
+            });
+            $("menu_d22").click(function(){
+                $('#con').load('land.php');
+            });			
+            $("menu_e11").click(function(){
+                $('#con').load('admitc.php');
+            });
+            $("menu_e12").click(function(){
+                $('#con').load('petty.php');
+            });
+            $("menu_e13").click(function(){
+                $('#con').load('admint.php');
+            });
+            $("menu_f11").click(function(){
+                $('#con').load('CRM.php');
+            });
+            $("menu_f12").click(function(){
+                $('#con').load('CRMin.php');
+            });
+            $("menu_f13").click(function(){
+                $('#con').load('Supplyc.php');
+            });					
+            $("menu_f21").click(function(){
+                $('#con').load('SUP.php');
+            });
+            $("menu_f22").click(function(){
+                $('#con').load('Supplyin.php');
+            });
+            $("menu_f23").click(function(){
+                $('#con').load('Supply.php');
+			});
+			$("menu_f31").click(function(){
+                $('#con').load('staffmanage.php');
+            });
+            $("menu_f32").click(function(){
+                $('#con').load('labormanage.php');
+            });
+            $("menu_f33").click(function(){
+                $('#con').load('supplyc.php');
+			});
+       )
+	}
+    </script>
+</head>
+<body>
+<div id="header">
+   <div float:left><img src='logo1.jpg' alt="Company Logo" height='60%' width=12%></img></div>
+   <ul id="menu">
+      <li>
+          <a href="#" id="menu_a">待辦事項</a>
+          <ul>
+              <li><a href="#" id="menu_a1">待辦事項總表</a></li>
+              <li><a href="#" id="menu_a2">新增待辦事項</a></li>
+              <li><a href="#" id="menu_a3">簽核待辦事項</a></li>
+           </ul>
+      </li>
+	  <li>
+         <a href="#" id="menu_b">業務案件</a>
+         <ul>
+	        <li><a href="#" id="menu_b1">業務案件總表</a></li>
+            <li><a href="#" id="menu_b2">新增業務案件</a></li>
+            <li><a href="#" id="menu_b3">業務案件暫存</a></li>
+	     </ul>
+	  </li>
+      <li>
+	     <a href="#" id="menu_c">維運(工程)進度管理</a>
+	     <ul>
+	        <li>
+			     <a href="#" id="menu_c1">維運案件</a>
+				 <ul>
+	             <li><a href="#" id="menu_c11">維運案件控管表</a></li>
+                 <li><a href="#" id="menu_c12">新增維運案件</a></li>	
+                 </ul>				 
+			</li>
+	        <li>
+			     <a href="#" id="menu_c2">工程案件</a>
+				 <ul>
+	             <li><a href="#" id="menu_c21">工程案件控管表</a></li>
+                 <li><a href="#" id="menu_c22">新增工程案件</a></li>	
+                 </ul>				 
+			</li>
+		 </ul>
+	  </li>
+	<li>
+	     <a href="#" id="menu_d">物料管理</a>
+	     <ul>
+	        <li>
+			     <a href="#" id="menu_d1">專案進貨</a>
+				 <ul>
+	             <li><a href="#" id="menu_d11">專案進貨總表</a></li>
+                 <li><a href="#" id="menu_d12">新增專案進貨</a></li>
+                 <li><a href="#" id="menu_d13">專案進貨簽核</a></li>					 
+                 </ul>				 
+			</li>
+	        <li>
+			     <a href="#" id="menu_d2">借貨管理</a>
+				 <ul>
+	             <li><a href="#" id="menu_d21">借貨總表</a></li>
+                 <li><a href="#" id="menu_d22">新增借貨</a></li>	
+                 </ul>				 
+			</li>
+		 </ul>
+	</li>
+	<li>
+         <a href="#" id="menu_e">零用金</a>
+         <ul>
+	        <li><a href="#" id="menu_e1">零用金總表</a></li>
+            <li><a href="#" id="menu_e2">新增零用金</a></li>
+            <li><a href="#" id="menu_e3">零用金核准</a></li>
+	     </ul>
+	</li>
+	<li>
+	     <a href="#" id="menu_f">資料維護管理</a>
+	     <ul>
+	        <li>
+				 <a href="#" id="menu_f">客戶資料</a>
+                 <ul>
+	                 <li><a href="#" id="menu_f11">客戶總表</a></li>
+                     <li><a href="#" id="menu_f12">新增客戶資料</a></li>
+                     <li><a href="#" id="menu_f13">客戶資料簽核</a></li>
+                 </ul>
+			</li>
+	        <li>
+			     <a href="#" id="menu_f2">廠商資料</a>
+				 <ul>
+	                 <li><a href="#" id="menu_f21">廠商資料總表</a></li>
+					 <li><a href="#" id="menu_f22">新增廠商資料</a></li>
+                     <li><a href="#" id="menu_f23">廠商資料簽核</a></li>
+					 
+                 </ul>
+			</li>
+		    <li>
+			     <a href="#" id="menu_f3">員工資料</a>
+				 <ul>
+                     <li><a href="#" id="menu_f31">員工資料總表</a></li>
+                     <li><a href="#" id="menu_f32">點工資料管理</a></li>
+                     <li><a href="#" id="menu_f33">工作地點簽核</a></li>
+                 </ul>
+			</li>
+		 </ul>
+	</li>
+	
+	<li>
+	     <a href="#">登出</a>
+    </li>
+</ul>
+     
+
+</div>
+</body>
+</html>
